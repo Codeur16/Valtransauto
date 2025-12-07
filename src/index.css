@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  }
+}
+
+/* --- Premium visual utilities --- */
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --accent-glow: 0 10px 30px rgba(34, 119, 255, 0.12);
+}
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border-radius: 18px;
+  box-shadow: 0 6px 30px rgba(8, 15, 28, 0.25);
+}
+
+.hero-bg {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform-origin: center;
+}
+
+/* Soft gradients and glow for CTAs */
+.btn-glow {
+  transition: transform 0.45s cubic-bezier(.25, .1, .25, 1), box-shadow 0.45s cubic-bezier(.25, .1, .25, 1);
+}
+
+.btn-glow:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 30px rgba(255, 60, 40, 0.14), 0 0 40px rgba(255, 60, 40, 0.06) inset;
+}
+
+/* Icon subtle pulse */
+.icon-pulse {
+  animation: pulse-slow 3.6s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+  0% {
+    transform: scale(1);
+    opacity: 1
+  }
+
+  50% {
+    transform: scale(1.03);
+    opacity: 0.92
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1
+  }
+}
+
+/* Reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s cubic-bezier(.25, .1, .25, 1), transform 0.9s cubic-bezier(.25, .1, .25, 1);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(.25, .1, .25, 1);
+}
+
+.reveal-fade.revealed {
+  opacity: 1
+}
+
+.reveal-zoom {
+  opacity: 0;
+  transform: scale(.98);
+  transition: opacity 0.9s cubic-bezier(.25, .1, .25, 1), transform 0.9s cubic-bezier(.25, .1, .25, 1);
+}
+
+.reveal-zoom.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Parallax helper: moves slower than scroll when using translateY set via JS */
+.parallax-layer {
+  will-change: transform
+}
+
+/* Text mask reveal */
+.text-mask {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.text-mask>span {
+  display: inline-block;
+  transform: translateY(100%);
+  transition: transform 0.9s cubic-bezier(.25, .1, .25, 1);
+}
+
+.text-mask.revealed>span {
+  transform: translateY(0)
+}
+
+/* Counter style */
+.counter {
+  font-variant-numeric: tabular-nums
+}
+
+/* Subtle glass card hover */
+.glass-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 50px rgba(11, 32, 79, 0.16), 0 4px 14px rgba(8, 15, 28, 0.08);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======================================================================= */
+
+/* Effet glass moderne */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.7) 100%);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Animation pour le sous-menu */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary {
+  list-style: none;
+}
+
+/* Custom scrollbar pour le menu mobile */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(31, 78, 121, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(31, 78, 121, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(31, 78, 121, 0.5);
+}
