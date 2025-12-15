@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import ReCAPTCHA from 'react-google-recaptcha';
 import {
   Phone, Mail, MapPin, Clock, MessageSquare, Send,
   Navigation, Home, Globe, Shield, Sparkles, ArrowRight,
@@ -21,11 +21,19 @@ const ContactPage = () => {
     subject: '',
     message: ''
   });
+  
+const [captchaVerified, setCaptchaVerified] = useState(false);
+const recaptchaRef = useRef(null);
 
 const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
+    // Vérifier si le CAPTCHA est validé
+    if (!captchaVerified) {
+      throw new Error('Veuillez valider le CAPTCHA');
+    }
+    
     // Vérifier si toutes les informations requises sont présentes
     if (!formData.name || !formData.email || !formData.message) {
       throw new Error('Veuillez remplir tous les champs obligatoires');
@@ -56,7 +64,7 @@ const handleSubmit = async (e) => {
       className: 'bg-gradient-to-r from-green-500 to-emerald-600 text-white'
     });
 
-    // Réinitialiser le formulaire
+    // Réinitialiser le formulaire et le CAPTCHA
     setFormData({
       name: '',
       email: '',
@@ -64,6 +72,10 @@ const handleSubmit = async (e) => {
       subject: '',
       message: ''
     });
+    setCaptchaVerified(false);
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset();
+    }
 
   } catch (error) {
     console.error('Erreur lors de l\'envoi du message:', error);
@@ -105,8 +117,8 @@ const handleSubmit = async (e) => {
     {
       icon: Phone,
       title: 'Téléphone Urgence',
-      content: '+32 123 456 789',
-      link: 'tel:+32123456789',
+      content: '+32 465 71 62 51',
+      link: 'tel:+32465716251',
       description: '24/7 - Dépannage & Urgences',
       color: 'from-red-500 to-orange-500',
       badge: 'Urgence'
@@ -123,8 +135,8 @@ const handleSubmit = async (e) => {
     {
       icon: Mail,
       title: 'Email Professionnel',
-      content: 'info@valtransauto.be',
-      link: 'mailto:info@valtransauto.be',
+      content: 'contact@valtransauto.be',
+      link: 'mailto:contact@valtransauto.be',
       description: 'Réponse sous 24h',
       color: 'from-blue-500 to-cyan-500',
       badge: 'Pro'
@@ -146,10 +158,10 @@ const handleSubmit = async (e) => {
 
   return (
     <>
-      <Helmet>
+      <div>
         <title>Contact - VALTRANSAUTO | Assistance 24/7 & Support Expert</title>
         <meta name="description" content="Contactez VALTRANSAUTO 24/7 via téléphone, WhatsApp, email ou visite. Service expert d'assistance automobile dans toute la Belgique." />
-      </Helmet>
+      </div>
 
       <div className="bg-gradient-to-b from-white via-gray-50 to-white min-h-screen">
         {/* Hero Section */}
@@ -442,11 +454,24 @@ const handleSubmit = async (e) => {
                       />
                     </div>
 
+                    <div className="w-full flex justify-center my-4">
+                     <ReCAPTCHA
+                          ref={recaptchaRef}
+                          sitekey="6LeSbCYsAAAAALbarYeM-GFebalB_qXd4MOqdGCi"
+                          onChange={() => setCaptchaVerified(true)}
+                          onExpired={() => setCaptchaVerified(false)}
+                          onErrored={() => setCaptchaVerified(false)}
+                        />
+                    </div>
+
+      {/* <div class="g-recaptcha" data-sitekey="6LeSbCYsAAAAALbarYeM-GFebalB_qXd4MOqdGCi" data-action="LOGIN"></div>
+      <br/> */}
                     <Button
                       type="submit"
-                      className="w-full group bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-lg py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                      disabled={!captchaVerified}
                     >
-                      <Send className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform" />
+                      <Send className="mr-2 h-5 w-5" />
                       Envoyer le Message
                     </Button>
                   </form>
@@ -515,7 +540,7 @@ const handleSubmit = async (e) => {
                 </Button>
 
                 <Button asChild size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 rounded-xl">
-                  <a href="tel:+32123456789">
+                  <a href="tel:+32465716251">
                     <Phone className="mr-3 h-5 w-5" />
                     Appeler Maintenant
                   </a>

@@ -1,32 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
-import { AuthProvider } from '@/contexts/SupabaseAuthContext';
+import { AuthProvider } from '@/components/AuthProvider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import HomePage from '@/pages/HomePage';
-import ServicesPage from '@/pages/ServicesPage';
-import VehicleSalesPage from '@/pages/VehicleSalesPage';
-import BookAppointmentPage from '@/pages/BookAppointmentPage';
-import ContactPage from '@/pages/ContactPage';
-import AboutPage from '@/pages/AboutPage';
-import AdminPanel from '@/pages/AdminPanel';
 import LoadingScreen from '@/components/LoadingScreen';
+import GDPRBanner from '@/components/GDPRBanner';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import PWAInstaller from '@/components/PWAInstaller';
+
+// === Lazy Loading des pages ===
+const HomePage = lazy(() => import('@/pages/HomePage'));
+const ServicesPage = lazy(() => import('@/pages/ServicesPage'));
+const VehicleSalesPage = lazy(() => import('@/pages/VehicleSalesPage'));
+const BookAppointmentPage = lazy(() => import('@/pages/BookAppointmentPage'));
+const ContactPage = lazy(() => import('@/pages/ContactPage'));
+const AboutPage = lazy(() => import('@/pages/AboutPage'));
+const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy'));
+const AdminPanel = lazy(() => import('@/pages/AdminPanel'));
+const AdminLogin = lazy(() => import('@/pages/AdminLogin'));
+const AdminSignUp = lazy(() => import('@/pages/AdminSignUp'));
+const ResetPassword = lazy(() => import('@/pages/ResetPassword'));
+const Unauthorized = lazy(() => import('@/pages/Unauthorized'));
 
 function AppContent() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Trigger loading animation on route change
     setLoading(true);
-    // Scroll to top
     window.scrollTo(0, 0);
-    
-    // Simulate loading time (adjust as needed for "feel")
+
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 800);
+    }, 700);
 
     return () => clearTimeout(timer);
   }, [location.pathname]);
@@ -35,17 +42,43 @@ function AppContent() {
     <div className="min-h-screen flex flex-col bg-[#F4F5F7]">
       {loading && <LoadingScreen />}
       <Navbar />
+
       <main className="flex-grow">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/vehicles" element={<VehicleSalesPage />} />
-          <Route path="/book-appointment" element={<BookAppointmentPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/admin" element={<AdminPanel />} />
-        </Routes>
+        <Suspense fallback={<LoadingScreen />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/vehicles" element={<VehicleSalesPage />} />
+            <Route path="/book-appointment" element={<BookAppointmentPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/signup" element={<AdminSignUp />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="/admin" element={<AdminPanel />} />
+            
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminPanel />
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* Catch-all route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+        
+        {/* GDPR Banner */}
+        <GDPRBanner />
       </main>
+
       <Footer />
       <Toaster />
     </div>
@@ -55,6 +88,8 @@ function AppContent() {
 function App() {
   return (
     <AuthProvider>
+      <PWAInstaller />
+     
       <Router>
         <AppContent />
       </Router>

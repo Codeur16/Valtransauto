@@ -189,3 +189,12 @@ details summary {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(31, 78, 121, 0.5);
 }
+
+.loading-fade {
+  animation: fade 0.6s ease-in-out;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

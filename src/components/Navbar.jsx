@@ -224,7 +224,7 @@ const Navbar = ({ admin = false }) => {
                     className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold rounded-lg shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/40 transition-all duration-300 group/phone"
                   >
                     <Phone className="h-4 w-4 group-hover/phone:animate-pulse" />
-                    <span>+32 465 681 845</span>
+                    <span>+32 465 71 62 51</span>
                   </a>
                 </motion.div>
               )}
@@ -358,14 +358,14 @@ const Navbar = ({ admin = false }) => {
                 {!shouldHideLogo && (
                   <div className="mt-8 pt-6 border-t border-gray-200">
                     <a
-                      href="tel:+33123456789"
+                      href="tel:+32465716251"
                       className="flex items-center justify-center gap-3 p-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
                       onClick={() => setIsOpen(false)}
                     >
                       <Phone className="h-5 w-5 animate-pulse" />
                       <div className="text-center">
                         <div className="text-sm opacity-90">Appelez-nous</div>
-                        <div className="text-lg">01 23 45 67 89</div>
+                        <div className="text-lg">+32 465 71 62 51</div>
                       </div>
                     </a>
 

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import ReCAPTCHA from 'react-google-recaptcha';
 import {
   Calendar, Clock, User, Mail, Phone, MessageSquare,
   CheckCircle, ArrowRight, Sparkles, Shield, Star,
@@ -53,6 +53,9 @@ useEffect(() => {
     time: '',
     message: ''
   });
+  
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+  const recaptchaRef = useRef(null);
 
 // Dans votre composant BookAppointmentPage, modifiez la fonction handleSubmit :
 // const handleSubmit = async (e) => {
@@ -110,6 +113,11 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   
   try {
+    // Vérifier si le CAPTCHA est validé
+    if (!captchaVerified) {
+      throw new Error('Veuillez valider le CAPTCHA');
+    }
+    
     // Vérifier si toutes les informations requises sont présentes
     if (!formData.name || !formData.email || !formData.phone || !formData.service || 
         !formData.vehicle || !formData.date || !formData.time) {
@@ -228,10 +236,10 @@ const handleChange = (e) => {
 
   return (
     <>
-      <Helmet>
+      <div>
         <title>Réservez votre Rendez-vous - VALTRANSAUTO | Service Premium</title>
         <meta name="description" content="Réservez votre rendez-vous en ligne avec VALTRANSAUTO. Service rapide, confirmation instantanée et rappels automatiques." />
-      </Helmet>
+      </div>
 
       <div className="bg-gradient-to-b from-white via-gray-50 to-white min-h-screen">
         {/* Hero Section */}
@@ -489,14 +497,23 @@ const handleChange = (e) => {
                       </div>
                     </div>
 
-                    <Button
-                      type="submit"
-                      className="w-full group bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-lg py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
-                      <Calendar className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform" />
-                      Confirmer le Rendez-vous
-                      <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    </Button>
+                    <div className="w-full flex justify-center my-4">
+              <ReCAPTCHA
+                          ref={recaptchaRef}
+                          sitekey="6LeSbCYsAAAAALbarYeM-GFebalB_qXd4MOqdGCi"
+                          onChange={() => setCaptchaVerified(true)}
+                          onExpired={() => setCaptchaVerified(false)}
+                          onErrored={() => setCaptchaVerified(false)}
+                        />
+            </div>
+            <Button 
+              type="submit" 
+              className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              disabled={!captchaVerified}
+            >
+              <CheckCircle className="mr-2 h-5 w-5" />
+              Confirmer le Rendez-vous
+            </Button>
 
                     {/* WhatsApp Alternative */}
                     <div className="text-center mt-6">
@@ -580,9 +597,9 @@ const handleChange = (e) => {
                       variant="ghost"
                       className="w-full text-gray-600 hover:text-blue-600"
                     >
-                      <a href="mailto:info@valtransauto.be">
+                      <a href="mailto:contact@valtransauto.be">
                         <Mail className="mr-3 h-5 w-5" />
-                        info@valtransauto.be
+                        contact@valtransauto.be
                       </a>
                     </Button>
                   </div>

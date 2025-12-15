@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Car, Fuel, Gauge, Calendar, MapPin, Phone,
@@ -15,8 +14,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { Link } from 'react-router-dom';
 import VehicleViewTracker from '@/components/VehicleViewTracker';
 
-const PHONE_NUMBER = '+32 2 123 45 67';
-const WHATSAPP_NUMBER = '32456123456'; // Sans le + pour WhatsApp
+const PHONE_NUMBER = ' +32 465 71 62 51';
+const WHATSAPP_NUMBER = '32465716251'; // Sans le + pour WhatsApp
 
 // Fonction pour parser les URLs d'images séparées par des virgules
 const parseImageUrls = (imageUrlString) => {
@@ -100,10 +99,10 @@ const VehicleDetails = ({ vehicle, onBack, onToggleFavorite, isFavorite }) => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
+      <div>
         <title>{`${vehicle.make} ${vehicle.model} - VALTRANSAUTO`}</title>
         <meta name="description" content={vehicle.description} />
-      </Helmet>
+      </div>
 
       {/* En-tête */}
       <div className="bg-white border-b shadow-sm sticky top-0 z-50">
@@ -328,7 +327,7 @@ const VehicleCard = ({ vehicle, isFavorite, onToggleFavorite, onViewDetails, pro
       className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-gray-200 flex flex-col h-full cursor-pointer"
       onClick={onViewDetails}
     >
-      // Dans VehicleCard.jsx
+ 
     <VehicleViewTracker vehicleId={vehicle.id} />
 
       {/* Image Gallery */}
@@ -649,7 +648,7 @@ const FiltersSidebar = ({ filters, setFilters, resetFilters, vehicleCount, showF
 };
 
 // Page principale
-const VehicleSalesPage = () => {
+function VehicleSalesPage() {
   const [vehicles, setVehicles] = useState([]);
   const [filteredVehicles, setFilteredVehicles] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
@@ -672,6 +671,8 @@ const VehicleSalesPage = () => {
 
   // Charger les véhicules
   useEffect(() => {
+    let isMounted = true;
+
     const loadVehicles = async () => {
       try {
         setLoading(true);
@@ -681,7 +682,7 @@ const VehicleSalesPage = () => {
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        console.log("Vehicles:", data)
+        console.log("vehicles:", data);
 
         // Transformer les données
         const transformed = (data || []).map(vehicle => ({
@@ -690,24 +691,41 @@ const VehicleSalesPage = () => {
           is_featured: vehicle.features || false
         }));
 
-        setVehicles(transformed);
-        setFilteredVehicles(transformed);
+        if (isMounted) {
+          setVehicles(transformed);
+          setFilteredVehicles(transformed);
+        }
       } catch (error) {
         console.error('Error loading vehicles:', error);
-        toast({
-          variant: 'destructive',
-          title: 'Erreur',
-          description: 'Impossible de charger les véhicules'
-        });
+        if (isMounted) {
+          toast({
+            variant: 'destructive',
+            title: 'Erreur',
+            description: 'Impossible de charger les véhicules: ' + (error.message || 'Erreur inconnue')
+          });
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
+    // Charger les favoris depuis le stockage local
+    try {
+      const savedFavorites = JSON.parse(localStorage.getItem('vehicle_favorites') || '[]');
+      setFavorites(savedFavorites);
+    } catch (e) {
+      console.error('Error loading favorites:', e);
+    }
+
     loadVehicles();
-    const savedFavorites = JSON.parse(localStorage.getItem('vehicle_favorites') || '[]');
-    setFavorites(savedFavorites);
-  }, []);
+
+    // Nettoyage
+    return () => {
+      isMounted = false;
+    };
+  }, [toast]);
 
   // Filtrer et trier les véhicules
   useEffect(() => {
@@ -806,10 +824,10 @@ const VehicleSalesPage = () => {
   // Afficher la liste des véhicules
   return (
     <div className="min-h-screen bg-gray-50">
-      <Helmet>
+      <div>
         <title>Véhicules d'occasion - VALTRANSAUTO</title>
         <meta name="description" content="Découvrez notre sélection de véhicules d'occasion de qualité à Bruxelles. Large choix de marques et modèles au meilleur prix." />
-      </Helmet>
+      </div>
 
       {/* En-tête */}
       <div className="bg-gradient-to-r from-[#1F4E79] to-blue-900 text-white py-12">

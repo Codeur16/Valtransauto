@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import {
   Shield, Truck, Wrench, Calendar, MapPin,
@@ -28,7 +27,8 @@ const ServicesPage = () => {
         'Reprise de votre ancien véhicule',
         'Service après-vente inclus'
       ],
-      image: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=80',
+      //image: 'https://i.postimg.cc/0yb9493B/Kiavenga_Blanche3.jpg',
+       image: 'https://i.postimg.cc/vHMyh00z/Screenshot-from-2025-12-08-17-08-27.png',
       color: 'from-[#FF0C00] to-orange-500',
       accentColor: 'bg-gradient-to-r from-[#FF0C00] to-orange-500',
       stats: '100+ véhicules disponibles',
@@ -52,7 +52,7 @@ const ServicesPage = () => {
         'Livraison à domicile',
         'Couverture nationale'
       ],
-      image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=800&q=80',
+      image: 'https://i.postimg.cc/L53Tm4Kj/Screenshot-from-2025-12-08-17-02-52.png',
       color: 'from-gray-900 to-gray-700',
       accentColor: 'bg-gradient-to-r from-gray-900 to-gray-700',
       stats: '30 min max',
@@ -69,7 +69,7 @@ const ServicesPage = () => {
         'Électricité automobile',
         'Garantie 2 ans'
       ],
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',
+      image: 'https://i.postimg.cc/fRpxnStc/slider-img3.jpg',
       color: 'from-emerald-500 to-green-400',
       accentColor: 'bg-gradient-to-r from-emerald-500 to-green-400',
       stats: 'Garantie 2 ans',
@@ -86,7 +86,7 @@ const ServicesPage = () => {
         'Rapport détaillé instantané',
         'Conseils personnalisés'
       ],
-      image: 'https://images.unsplash.com/photo-1595872018818-97555653a011?auto=format&fit=crop&w=800&q=80',
+      image: 'https://i.postimg.cc/fLTW8Bzp/banner-bg.png',
       color: 'from-blue-500 to-cyan-400',
       accentColor: 'bg-gradient-to-r from-blue-500 to-cyan-400',
       stats: '99% de satisfaction',
@@ -143,23 +143,23 @@ const ServicesPage = () => {
       stats: '48h traitement',
       duration: 'Administratif'
     },
-    {
-      icon: MapPin,
-      title: 'Service Mobile',
-      description: 'Nos mécaniciens se déplacent à votre domicile ou bureau pour un gain de temps optimal.',
-      features: [
-        'Intervention à domicile',
-        'Diagnostic sur place',
-        'Réparations mineures',
-        'Entretien régulier',
-        'Gain de temps'
-      ],
-      image: 'https://images.unsplash.com/photo-1492144434756-4c6f0e6e7bca?auto=format&fit=crop&w=800&q=80',
-      color: 'from-indigo-500 to-blue-400',
-      accentColor: 'bg-gradient-to-r from-indigo-500 to-blue-400',
-      stats: 'Service Premium',
-      duration: 'Sur rendez-vous'
-    }
+    // {
+    //   icon: MapPin,
+    //   title: 'Service Mobile',
+    //   description: 'Nos mécaniciens se déplacent à votre domicile ou bureau pour un gain de temps optimal.',
+    //   features: [
+    //     'Intervention à domicile',
+    //     'Diagnostic sur place',
+    //     'Réparations mineures',
+    //     'Entretien régulier',
+    //     'Gain de temps'
+    //   ],
+    //   image: 'https://images.unsplash.com/photo-1492144434756-4c6f0e6e7bca?auto=format&fit=crop&w=800&q=80',
+    //   color: 'from-indigo-500 to-blue-400',
+    //   accentColor: 'bg-gradient-to-r from-indigo-500 to-blue-400',
+    //   stats: 'Service Premium',
+    //   duration: 'Sur rendez-vous'
+    // }
   ];
 
   const stats = [
@@ -196,10 +196,10 @@ const ServicesPage = () => {
 
   return (
     <>
-      <Helmet>
+      <div>
         <title>Nos Services - VALTRANSAUTO | Excellence Automobile en Belgique</title>
         <meta name="description" content="Services automobiles complets : vente de véhicules d'occasion, transport et remorquage, réparations garanties, entretien professionnel." />
-      </Helmet>
+      </div>
 
       <div className="bg-gradient-to-b from-white via-gray-50 to-white">
         {/* Hero Section */}

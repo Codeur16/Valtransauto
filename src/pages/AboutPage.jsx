@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import {
   Award, Users, Target, Shield, Clock, CheckCircle,
@@ -77,10 +76,10 @@ const AboutPage = () => {
 
   return (
     <>
-      <Helmet>
+      <div>
         <title>À Propos de VALTRANSAUTO | Excellence Automobile depuis 2008</title>
         <meta name="description" content="Découvrez VALTRANSAUTO : notre histoire, nos valeurs, notre équipe passionnée. Leader des services automobiles en Belgique depuis plus de 15 ans." />
-      </Helmet>
+      </div>
 
       <div className="bg-gradient-to-b from-white via-gray-50 to-white min-h-screen">
         {/* Hero Section */}

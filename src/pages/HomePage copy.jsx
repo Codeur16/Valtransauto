@@ -298,46 +298,38 @@ const HomePage = () => {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="space-y-6"
-                // className="text-white space-y-6"
+                className="text-white space-y-6"
               >
-                <h1 className="text-4xl md:text-3xl lg:text-6xl font-bold leading-tight mb-6">
+                <h1 className="text-3xl md:text-[64px] font-bold leading-[1.1] mb-6">
                   <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
-                    Votre prochain véhicule
+                    Votre Expert Auto
                   </span>
                   <br />
-                  <span className="text-[#FF0C00] font-semibold md:text-2xl lg:text-4xl ">garanti jusqu'à 24 mois</span>
+                  <span className="text-[#FF0C00] font-semibold">en Belgique</span>
                 </h1>
 
-                <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-2xl font-light">
-                  <span className="font-semibold text-yellow-300">+50 véhicules en stock</span> sélectionnés avec soin et contrôlés par nos experts.
-                  <span className="block mt-3 text-white/80 text-lg bg-white/5 px-4 py-3 rounded-xl border-l-4 border-yellow-400">
-                     100% contrôlés |  Garantie 12-24 mois |  Livraison en Belgique
+                <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-xl font-light">
+                  <span className="font-semibold text-cyan-200">Vente de véhicules garantis</span> et services automobiles complets aux standards des meilleurs professionnels européens.
+                  <span className="block mt-2 text-white/80 text-lg">
+                    Trouvez votre prochaine voiture chez nous et profitez de notre expertise.
                   </span>
                 </p>
 
-                <div className="space-y-4 pt-2">
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button asChild size="lg" className="bg-gradient-to-r from-[#FF0C00] to-orange-600 hover:from-[#FF0C00]/90 hover:to-orange-500 text-white text-lg px-8 py-6 shadow-[0_20px_80px_-20px_rgba(255,12,0,0.8)] group relative overflow-hidden">
-                      <Link to="/vehicles" className="flex items-center">
-                        <ShoppingBag className="mr-2 h-5 w-5" />
-                        <span className="relative z-10 font-semibold">Découvrir nos véhicules</span>
-                        <ArrowRight className="ml-2 h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#FF0C00] to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </Link>
-                    </Button>
-                    <Button asChild size="lg" variant="outline" className="border-white/40 bg-white/5 hover:bg-white/10 text-white text-lg px-8 py-6 backdrop-blur group">
-                      <Link to="/contact" className="flex items-center">
-                        <Phone className="mr-2 h-5 w-5" />
-                        <span>Être rappelé</span>
-                      </Link>
-                    </Button>
-                  </div>
-                  <div className="text-sm text-white/70 flex flex-wrap items-center gap-x-4 gap-y-2">
-                    <span className="flex items-center"><CheckCircle className="h-4 w-4 text-green-400 mr-1.5" /> Garantie 12-24 mois</span>
-                    <span className="flex items-center"><Shield className="h-4 w-4 text-blue-300 mr-1.5" /> Contrôle technique inclus</span>
-                    <span className="flex items-center"><Euro className="h-4 w-4 text-yellow-300 mr-1.5" /> Financement sur mesure</span>
-                  </div>
+                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                  <Button asChild size="lg" className="bg-[#FF0C00] hover:bg-[#FF0C00]/90 text-white text-lg px-8 py-6 shadow-[0_20px_80px_-20px_rgba(255,12,0,0.8)] group relative overflow-hidden">
+                    <Link to="/vehicles" className="flex items-center">
+                      <ShoppingBag className="mr-2 h-5 w-5" />
+                      <span className="relative z-10">Voir nos véhicules</span>
+                      <ArrowRight className="ml-2 h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#FF0C00] to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 text-lg px-8 py-6 backdrop-blur group">
+                    <Link to="/services" className="flex items-center">
+                      <span>Nos services</span>
+                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
                 </div>
 
                 <div className="mt-12 grid sm:grid-cols-3 gap-4">
@@ -347,14 +339,14 @@ const HomePage = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                      className="bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-2xl p-5 backdrop-blur hover:border-white/20 transition-all duration-300 group hover:-translate-y-1 shadow-lg hover:shadow-xl hover:shadow-black/20"
+                      className="bg-white/10 border border-white/10 rounded-2xl p-4 backdrop-blur hover:bg-white/15 transition-colors group"
                     >
-                      <div className="text-3xl font-bold text-white mb-2 flex items-baseline">
+                      <div className="text-3xl font-bold text-white mb-1 flex items-baseline">
                         <span>{highlight.value}</span>
-                        <span className="text-yellow-300 ml-1">{highlight.suffix}</span>
+                        <span className="text-[#FF0C00] ml-1">{highlight.suffix}</span>
                       </div>
-                      <p className="text-white/90 text-sm font-semibold">{highlight.label}</p>
-                      <p className="text-white/60 text-xs mt-1.5">{highlight.detail}</p>
+                      <p className="text-white/80 text-sm font-medium">{highlight.label}</p>
+                      <p className="text-white/60 text-xs mt-2">{highlight.detail}</p>
                     </motion.div>
                   ))}
                 </div>

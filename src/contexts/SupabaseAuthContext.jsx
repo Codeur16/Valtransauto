@@ -2,6 +2,8 @@ import React, { createContext, useContext, useEffect, useState, useCallback, use
 
 import { supabase } from '@/lib/customSupabaseClient';
 import { useToast } from '@/components/ui/use-toast';
+import LoadingScreen from '@/components/LoadingScreen';
+
 
 const AuthContext = createContext(undefined);
 
@@ -93,7 +95,12 @@ export const AuthProvider = ({ children }) => {
     signOut,
   }), [user, session, loading, signUp, signIn, signOut]);
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  // return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+  <AuthContext.Provider value={value}>
+    {loading ? <LoadingScreen /> : children}
+  </AuthContext.Provider>
+);
 };
 
 export const useAuth = () => {

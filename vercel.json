@@ -10,7 +10,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/",
+      "dest": "/dist/index.html",
       "headers": {
         "Cache-Control": "s-maxage=1, stale-while-revalidate"
       }
